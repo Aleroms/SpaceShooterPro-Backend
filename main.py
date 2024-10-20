@@ -24,6 +24,7 @@ class User(db.Model):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     username: Mapped[str] = mapped_column(String(32), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(String(250), nullable=False)
+    highscore: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     session_token: Mapped[str] = mapped_column(String(36), unique=True, nullable=True)  # Add session_token column
 
 with app.app_context():
@@ -123,6 +124,27 @@ def logout():
     user.session_token = ""
     db.session.commit()
     return jsonify(response={"success":"successfully logged out"})
+
+
+# Game Logic
+@app.route('/update_highscore', methods=['POST'])
+@authenticate_token
+def update_highscore():
+    try:
+        new_score = int(request.form.get('score'))
+    except:
+        return jsonify(response={"error":"there was an error with the score provided. Please check"})
+
+    user = request.user
+    
+    # check if new score > highscore
+    if new_score > user.highscore:
+        user.highscore = new_score
+        db.session.commit()
+        return jsonify(response={"success":"successfully updated the user's score"})
+    
+    return jsonify(response={"error": "score is not new high score"})
+
 
 if __name__ == "__main__":
     app.run(debug=True)
