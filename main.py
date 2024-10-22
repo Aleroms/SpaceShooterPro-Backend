@@ -59,7 +59,10 @@ def authenticate_token(func):
         return func(*args, **kwargs)
     return wrapper
 
-
+# API Documentation
+@app.route('/', methods=['GET'])
+def home():
+    return render_template('api_docs.html')
 # User Authentication and Management
 @app.route('/login', methods=["POST"])
 def login():

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Space Shooter Pro API Documentation</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+  </head>
+  <body>
+    <h1>Space Shooter Pro API Documentation</h1>
+
+    <h2>User Authentication and Management</h2>
+
+    <h3>/login</h3>
+    <p><strong>Method:</strong> POST</p>
+    <p><strong>Description:</strong> Logs in a user.</p>
+    <p><strong>Request Body:</strong></p>
+    <pre>
+    {
+        "username": "your_username",
+        "password": "your_password"
+    }
+    </pre>
+    <p><strong>Response:</strong></p>
+    <pre>
+    {
+        "response": {
+            "success": "Successfully logged in",
+            "session_token": "your_session_token"
+        }
+    }
+    </pre>
+    <p><strong>Error Response:</strong></p>
+    <pre>
+    {
+        "error": "Invalid username or password"
+    }
+    </pre>
+
+    <h3>/register</h3>
+    <p><strong>Method:</strong> POST</p>
+    <p><strong>Description:</strong> Registers a new user.</p>
+    <p><strong>Request Body:</strong></p>
+    <pre>
+    {
+        "username": "your_username",
+        "password": "your_password"
+    }
+    </pre>
+    <p><strong>Response:</strong></p>
+    <pre>
+    {
+        "response": {
+            "success": "Successfully added new user",
+            "session_token": "your_session_token"
+        }
+    }
+    </pre>
+    <p><strong>Error Response:</strong></p>
+    <pre>
+    {
+        "error": {
+            "Missing Field": "Username and password are required"
+        }
+    }
+    </pre>
+    <pre>
+    {
+        "error": {
+            "Duplicate Entry": "User already exists"
+        }
+    }
+    </pre>
+
+    <h3>/delete_user</h3>
+    <p><strong>Method:</strong> DELETE</p>
+    <p><strong>Description:</strong> Deletes the currently logged-in user.</p>
+    <p><strong>Headers:</strong></p>
+    <pre>
+    {
+        "Authorization": "your_session_token"
+    }
+    </pre>
+    <p><strong>Response:</strong></p>
+    <pre>
+    {
+        "response": {
+            "success": "successfully deleted your_username"
+        }
+    }
+    </pre>
+    <p><strong>Error Response:</strong></p>
+    <pre>
+    {
+        "error": "Session token missing" 
+    }
+    </pre>
+    <pre>
+    {
+        "error": "Invalid session token" 
+    }
+    </pre>
+
+    <h3>/logout</h3>
+    <p><strong>Method:</strong> POST</p>
+    <p><strong>Description:</strong> Logs out the currently logged-in user.</p>
+    <p><strong>Headers:</strong></p>
+    <pre>
+    {
+        "Authorization": "your_session_token"
+    }
+    </pre>
+    <p><strong>Response:</strong></p>
+    <pre>
+    {
+        "response": {
+            "success": "successfully logged out"
+        }
+    }
+    </pre>
+    <p><strong>Error Response:</strong></p>
+    <pre>
+    {
+        "error": "Session token missing" 
+    }
+    </pre>
+    <pre>
+    {
+        "error": "Invalid session token" 
+    }
+    </pre>
+
+    <h2>Game Logic</h2>
+
+    <h3>/update_highscore</h3>
+    <p><strong>Method:</strong> POST</p>
+    <p>
+      <strong>Description:</strong> Updates the high score for the currently
+      logged-in user.
+    </p>
+    <p><strong>Headers:</strong></p>
+    <pre>
+    {
+        "Authorization": "your_session_token"
+    }
+    </pre>
+    <p><strong>Request Body:</strong></p>
+    <pre>
+    {
+        "score": "your_new_score" 
+    }
+    </pre>
+    <p><strong>Response:</strong></p>
+    <pre>
+    {
+        "response": {
+            "success": "successfully updated the user's score"
+        }
+    }
+    </pre>
+    <p><strong>Error Response:</strong></p>
+    <pre>
+    {
+        "response": {
+            "error": "there was an error with the score provided. Please check"
+        }
+    }
+    </pre>
+    <pre>
+    {
+        "response": {
+            "error": "score is not new high score"
+        }
+    }
+    </pre>
+    <pre>
+    {
+        "error": "Session token missing" 
+    }
+    </pre>
+    <pre>
+    {
+        "error": "Invalid session token" 
+    }
+    </pre>
+  </body>
+</html>
