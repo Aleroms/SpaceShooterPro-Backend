@@ -42,3 +42,10 @@ pre {
 strong {
   font-weight: bold;
 }
+.method {
+  background-color: #00acc1; /* Teal background for methods */
+  color: white;
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-family: monospace;
+}

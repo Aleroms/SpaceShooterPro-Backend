@@ -4,7 +4,7 @@
     <title>Space Shooter Pro API Documentation</title>
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='css/styles.css') }}"
+      href="{{url_for('static',filename='css/styles.css')}}"
     />
   </head>
   <body>
@@ -13,7 +13,7 @@
     <h2>User Authentication and Management</h2>
 
     <h3>/login</h3>
-    <p><strong>Method:</strong> POST</p>
+    <p><strong>Method:</strong> <code class="method">POST</code></p>
     <p><strong>Description:</strong> Logs in a user.</p>
     <p><strong>Request Body:</strong></p>
     <pre>
@@ -39,7 +39,7 @@
     </pre>
 
     <h3>/register</h3>
-    <p><strong>Method:</strong> POST</p>
+    <p><strong>Method:</strong> <code class="method">POST</code></p>
     <p><strong>Description:</strong> Registers a new user.</p>
     <p><strong>Request Body:</strong></p>
     <pre>
@@ -74,7 +74,7 @@
     </pre>
 
     <h3>/delete_user</h3>
-    <p><strong>Method:</strong> DELETE</p>
+    <p><strong>Method:</strong> <code class="method">DELETE</code></p>
     <p><strong>Description:</strong> Deletes the currently logged-in user.</p>
     <p><strong>Headers:</strong></p>
     <pre>
@@ -103,7 +103,7 @@
     </pre>
 
     <h3>/logout</h3>
-    <p><strong>Method:</strong> POST</p>
+    <p><strong>Method:</strong> <code class="method">POST</code></p>
     <p><strong>Description:</strong> Logs out the currently logged-in user.</p>
     <p><strong>Headers:</strong></p>
     <pre>
@@ -134,7 +134,7 @@
     <h2>Game Logic</h2>
 
     <h3>/update_highscore</h3>
-    <p><strong>Method:</strong> POST</p>
+    <p><strong>Method:</strong> <code class="method">POST</code></p>
     <p>
       <strong>Description:</strong> Updates the high score for the currently
       logged-in user.
