@@ -48,11 +48,11 @@ def authenticate_token(func):
     def wrapper(*args, **kwargs):
         session_token = request.headers.get('Authorization')
         if not session_token:
-            return jsonify(error={"message": "Session token missing"})
+            return jsonify(error={"message": "Session token missing"}), 400
 
         user = User.query.filter_by(session_token=session_token).first()  # Find user by session_token
         if not user:
-            return jsonify(error={"message":"Invalid session token"})
+            return jsonify(error={"message":"Invalid session token"}), 400
 
         # Store user in the request context for later use
         request.user = user
@@ -77,9 +77,9 @@ def login():
         return jsonify(response={
         "success":"Successfully logged in",
         "session_token":st
-        })
+        }), 200
     else:
-        return jsonify(error={"message": "Invalid username or password"})
+        return jsonify(error={"message": "Invalid username or password"}), 404
     
 @app.route('/register',methods=['POST'])
 def register():
@@ -87,11 +87,11 @@ def register():
     password = request.form.get('password')
 
     if not username or not password:
-        return jsonify(error={"message": "Username and password are required"})
+        return jsonify(error={"message": "Username and password are required"}), 400
     
     users = User.query.all()
     if any(user.username == username for user in users):
-        return jsonify(error={"message": "User already exists"})
+        return jsonify(error={"message": "User already exists"}), 400
     
     pw_hash = bcrypt.generate_password_hash(password)
     session_token = str(uuid.uuid4())
@@ -106,7 +106,7 @@ def register():
     return jsonify(response={
         "success":"Successfully added new user",
         "session_token":session_token
-        })
+        }), 201
 
 
 @app.route('/delete_user', methods=['DELETE'])
@@ -136,7 +136,7 @@ def update_highscore():
     try:
         new_score = int(request.form.get('score'))
     except:
-        return jsonify(error={"message":"there was an error with the score provided. Please check"})
+        return jsonify(error={"message":"there was an error with the score provided. Please check"}), 400
 
     user = request.user
     
