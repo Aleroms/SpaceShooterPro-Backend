@@ -48,11 +48,11 @@ def authenticate_token(func):
     def wrapper(*args, **kwargs):
         session_token = request.headers.get('Authorization')
         if not session_token:
-            return jsonify(error="Session token missing")
+            return jsonify(error={"message": "Session token missing"})
 
         user = User.query.filter_by(session_token=session_token).first()  # Find user by session_token
         if not user:
-            return jsonify(error="Invalid session token")
+            return jsonify(error={"message":"Invalid session token"})
 
         # Store user in the request context for later use
         request.user = user
@@ -79,7 +79,7 @@ def login():
         "session_token":st
         })
     else:
-        return jsonify(error="Invalid username or password")
+        return jsonify(error={"message": "Invalid username or password"})
     
 @app.route('/register',methods=['POST'])
 def register():
@@ -87,11 +87,11 @@ def register():
     password = request.form.get('password')
 
     if not username or not password:
-        return jsonify(error={"Missing Field": "Username and password are required"})
+        return jsonify(error={"message": "Username and password are required"})
     
     users = User.query.all()
     if any(user.username == username for user in users):
-        return jsonify(error={"Duplicate Entry": "User already exists"})
+        return jsonify(error={"message": "User already exists"})
     
     pw_hash = bcrypt.generate_password_hash(password)
     session_token = str(uuid.uuid4())
@@ -136,7 +136,7 @@ def update_highscore():
     try:
         new_score = int(request.form.get('score'))
     except:
-        return jsonify(response={"error":"there was an error with the score provided. Please check"})
+        return jsonify(error={"message":"there was an error with the score provided. Please check"})
 
     user = request.user
     
@@ -146,7 +146,7 @@ def update_highscore():
         db.session.commit()
         return jsonify(response={"success":"successfully updated the user's score"})
     
-    return jsonify(response={"error": "score is not new high score"})
+    return jsonify(error={"message": "score is not new high score"})
 
 
 if __name__ == "__main__":

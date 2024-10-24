@@ -93,12 +93,16 @@
     <p><strong>Error Response:</strong></p>
     <pre>
     {
-        "error": "Session token missing" 
+        "error":{
+            "message": "Session token missing"
+        }  
     }
     </pre>
     <pre>
     {
-        "error": "Invalid session token" 
+        "error": {
+            "message": "Invalid session token" 
+        } 
     }
     </pre>
 
@@ -122,12 +126,16 @@
     <p><strong>Error Response:</strong></p>
     <pre>
     {
-        "error": "Session token missing" 
+        "error": {
+            "message": "Session token missing" 
+        }
     }
     </pre>
     <pre>
     {
-        "error": "Invalid session token" 
+        "error": {
+            "message": "Invalid session token" 
+        } 
     }
     </pre>
 
@@ -162,26 +170,30 @@
     <p><strong>Error Response:</strong></p>
     <pre>
     {
-        "response": {
-            "error": "there was an error with the score provided. Please check"
+        "error": {
+            "message": "there was an error with the score provided. Please check"
         }
     }
     </pre>
     <pre>
     {
-        "response": {
-            "error": "score is not new high score"
+        "error": {
+            "message": "score is not new high score"
         }
     }
     </pre>
     <pre>
     {
-        "error": "Session token missing" 
+        "error": {
+            "message": "Session token missing" 
+        }
     }
     </pre>
     <pre>
     {
-        "error": "Invalid session token" 
+        "error": {
+            "message": "Invalid session token" 
+        }
     }
     </pre>
   </body>
