@@ -9,10 +9,27 @@
   </head>
   <body>
     <h1>Space Shooter Pro API Documentation</h1>
+    <h2>Table of Contents</h2>
+    <ul>
+      <li>
+        <a href="#user_auth_management">User Authentication and Management</a>
+      </li>
+      <ul>
+        <li><a href="#login">/login</a> (POST)</li>
+        <li><a href="#register">/register</a> (POST)</li>
+        <li><a href="#delete_user">/delete_user</a> (DELETE)</li>
+        <li><a href="#logout">/logout</a> (POST)</li>
+      </ul>
+      <li><a href="#game_logic">Game Logic</a></li>
+      <ul>
+        <li><a href="#update_highscore">/update_highscore</a> (POST)</li>
+        <li><a href="#highscore">/highscore</a> (GET)</li>
+      </ul>
+    </ul>
 
-    <h2>User Authentication and Management</h2>
+    <h2 id="user_auth_management">User Authentication and Management</h2>
 
-    <h3>/login</h3>
+    <h3 id="login">/login</h3>
     <p><strong>Method:</strong> <code class="method">POST</code></p>
     <p><strong>Description:</strong> Logs in a user.</p>
     <p><strong>Request Body:</strong></p>
@@ -38,7 +55,7 @@
     }
     </pre>
 
-    <h3>/register</h3>
+    <h3 id="register">/register</h3>
     <p><strong>Method:</strong> <code class="method">POST</code></p>
     <p><strong>Description:</strong> Registers a new user.</p>
     <p><strong>Request Body:</strong></p>
@@ -73,7 +90,7 @@
     }
     </pre>
 
-    <h3>/delete_user</h3>
+    <h3 id="delete_user">/delete_user</h3>
     <p><strong>Method:</strong> <code class="method">DELETE</code></p>
     <p><strong>Description:</strong> Deletes the currently logged-in user.</p>
     <p><strong>Headers:</strong></p>
@@ -95,7 +112,7 @@
     {
         "error":{
             "message": "Session token missing"
-        }  
+        }   
     }
     </pre>
     <pre>
@@ -106,7 +123,7 @@
     }
     </pre>
 
-    <h3>/logout</h3>
+    <h3 id="logout">/logout</h3>
     <p><strong>Method:</strong> <code class="method">POST</code></p>
     <p><strong>Description:</strong> Logs out the currently logged-in user.</p>
     <p><strong>Headers:</strong></p>
@@ -139,9 +156,9 @@
     }
     </pre>
 
-    <h2>Game Logic</h2>
+    <h2 id="game_logic">Game Logic</h2>
 
-    <h3>/update_highscore</h3>
+    <h3 id="update_highscore">/update_highscore</h3>
     <p><strong>Method:</strong> <code class="method">POST</code></p>
     <p>
       <strong>Description:</strong> Updates the high score for the currently
@@ -196,5 +213,59 @@
         }
     }
     </pre>
+    <h3 id="highscore">/highscore</h3>
+    <p><strong>Method:</strong> <code class="method">GET</code></p>
+    <p><strong>Description:</strong> Retrieves high scores.</p>
+
+    <p><strong>Query Parameters:</strong></p>
+    <ul>
+      <li>
+        <code>username</code> (optional): The username of a specific user to
+        retrieve the high score for.
+      </li>
+      <li>
+        <code>offset</code> (optional, default=0): The number of high scores to
+        skip before starting to fetch.
+      </li>
+      <li>
+        <code>limit</code> (optional, default=10): The maximum number of high
+        scores to return.
+      </li>
+    </ul>
+
+    <p><strong>Response (All High Scores):</strong></p>
+    <pre>
+{
+  "response": {
+    "highscores": [
+      { "username": "user1", "highscore": 1500 },
+      { "username": "user2", "highscore": 1200 },
+      // ... more high scores
+    ]
+  }
+}
+</pre
+    >
+
+    <p><strong>Response (Single User):</strong></p>
+    <pre>
+{
+  "response": {
+    "username": "user1",
+    "highscore": 1500
+  }
+}
+</pre
+    >
+
+    <p><strong>Error Response:</strong></p>
+    <pre>
+{
+  "error": {
+    "message": "user does not exist"
+  }
+}
+</pre
+    >
   </body>
 </html>

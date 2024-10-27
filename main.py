@@ -148,6 +148,33 @@ def update_highscore():
     
     return jsonify(error={"message": "score is not new high score"})
 
+@app.route('/highscore', methods=['GET'])
+def highscore():
+    username = request.form.get('username')
+    offset = request.form.get('offset',0, type=int)
+    limit = request.form.get('limit',10, type=int)
+
+    if limit <= 0:
+        limit = 10  
+    if offset <= 0:
+        offset = 0
+
+
+    if username:
+        user = User.query.filter_by(username=username).first()
+        if user:
+            return jsonify(response={"username":username, "score":user.highscore})
+        
+        return jsonify(error={"message":"user does not exist"}), 404
+    
+    highscores_query = User.query.offset(offset).limit(limit)
+    highscores = highscores_query
+
+    highscore_list = [{"username":user.username, "highscore": user.highscore} for user in highscores]
+    return jsonify(response={"highscores":highscore_list})
+
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
