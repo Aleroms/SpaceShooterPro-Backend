@@ -150,9 +150,9 @@ def update_highscore():
 
 @app.route('/highscore', methods=['GET'])
 def highscore():
-    username = request.form.get('username')
-    offset = request.form.get('offset',0, type=int)
-    limit = request.form.get('limit',10, type=int)
+    username = request.args.get('username')
+    offset = request.args.get('offset',0, type=int)
+    limit = request.args.get('limit',10, type=int)
 
     if limit <= 0:
         limit = 10  
@@ -163,7 +163,7 @@ def highscore():
     if username:
         user = User.query.filter_by(username=username).first()
         if user:
-            return jsonify(response={"username":username, "score":user.highscore})
+            return jsonify(response={"username":username, "highscore":user.highscore})
         
         return jsonify(error={"message":"user does not exist"}), 404
     
