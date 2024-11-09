@@ -5,17 +5,23 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String
 from flask_bcrypt import Bcrypt
 from functools import wraps
+import os
+from dotenv import load_dotenv
+
+
+
+load_dotenv()
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
 # vars
-SECRET_APIKEY = 'ssp2024unityv2'
+SECRET_APIKEY = os.environ['SSP2024-APIKEY']
 
 class Base(DeclarativeBase):
     pass
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///spaceShooterPro.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['SSP2024Db']
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
@@ -29,6 +35,7 @@ class User(db.Model):
 
 with app.app_context():
     db.create_all()
+
 
 def authenticate_user(username, password):
     user = User.query.filter_by(username=username).first()
@@ -59,10 +66,19 @@ def authenticate_token(func):
         return func(*args, **kwargs)
     return wrapper
 
+@app.after_request
+def add_cors_headers(response):
+    response.headers['Access-Control-Allow-Origin'] = "*"
+    response.headers['Access-Control-Allow-Methods'] = "GET, OPTIONS, POST, DELETE"
+    response.headers['Access-Control-Allow-Headers'] = "Content-Type"
+    return response
+
 # API Documentation
 @app.route('/', methods=['GET'])
 def home():
     return render_template('api_docs.html')
+
+
 # User Authentication and Management
 @app.route('/login', methods=["POST"])
 def login():
@@ -175,6 +191,6 @@ def highscore():
 
 
 
-
 if __name__ == "__main__":
     app.run(debug=True)
+
